@@ -24,9 +24,9 @@ input=$(xinput watch-props  "TPPS/2 IBM TrackPoint" "" | grep 318)
 on="${input: -1}"
 
 if [ $on -eq 0 ]; then
-    xinput set-prop $TRACKPOINT "$WHEEL" 1
-    xinput set-prop $TRACKPOINT "$WHEEL Button" 2
-    xinput set-prop $TRACKPOINT "$WHEEL Timeout" 200 
+    xinput set-prop "${TRACKPOINT}" "${WHEEL}" 1
+    xinput set-prop "${TRACKPOINT}" "${WHEEL} Button" 2
+    xinput set-prop "${TRACKPOINT}" "${WHEEL} Timeout" 200 
 else
-    xinput set-prop $TRACKPOINT $WHEEL 0
+    xinput set-prop "${TRACKPOINT}" "${WHEEL}" 0
 fi
