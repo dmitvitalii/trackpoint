@@ -19,9 +19,18 @@
 
 readonly TRACKPOINT="TPPS/2 IBM TrackPoint"
 readonly WHEEL="Evdev Wheel Emulation"
+readonly MIDDLE="libinput Middle Emulation Enabled"
 
 input=$(xinput --list-props  "${TRACKPOINT}" | grep "${WHEEL} (")
 enabled="${input: -1}"
+
+enable_middle() {
+    if [ "${enabled}" -eq 1 ]; then
+        xinput set-prop "${TRACKPOINT}" "${MIDDLE}" 0
+    else
+        xinput set-prop "${TRACKPOINT}" "${MIDDLE}" 1
+    fi
+}
 
 if [ "${enabled}" -eq 1 ]; then
     xinput set-prop "${TRACKPOINT}" "${WHEEL}" 0
