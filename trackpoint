@@ -19,23 +19,32 @@
 
 readonly TRACKPOINT="TPPS/2 IBM TrackPoint"
 readonly WHEEL="Evdev Wheel Emulation"
-readonly MIDDLE="libinput Middle Emulation Enabled"
-
-input=$(xinput --list-props  "${TRACKPOINT}" | grep "${WHEEL} (")
-enabled="${input: -1}"
+readonly MIDDLE="libinput Scroll Method Enabled"
 
 enable_middle() {
     if [ "${enabled}" -eq 1 ]; then
-        xinput set-prop "${TRACKPOINT}" "${MIDDLE}" 0
+        xinput set-prop "${TRACKPOINT}" "${MIDDLE}" 0, 0, 0
     else
-        xinput set-prop "${TRACKPOINT}" "${MIDDLE}" 1
+        xinput set-prop "${TRACKPOINT}" "${MIDDLE}" 0, 0, 1
     fi
 }
 
-if [ "${enabled}" -eq 1 ]; then
-    xinput set-prop "${TRACKPOINT}" "${WHEEL}" 0
+enable_wheel() {
+    if [ "${enabled}" -eq 1 ]; then
+        xinput set-prop "${TRACKPOINT}" "${WHEEL}" 0
+    else
+        xinput set-prop "${TRACKPOINT}" "${WHEEL}" 1
+        xinput set-prop "${TRACKPOINT}" "${WHEEL} Button" 2
+        xinput set-prop "${TRACKPOINT}" "${WHEEL} Timeout" 200 
+    fi
+}
+
+input=$(xinput --list-props  "${TRACKPOINT}" | grep -i "${WHEEL} (")
+if [ -z "${input}" ]; then
+    input=$(xinput --list-props  "${TRACKPOINT}" | grep -i "${MIDDLE} (")
+    enabled="${input: -1}"
+    enable_middle
 else
-    xinput set-prop "${TRACKPOINT}" "${WHEEL}" 1
-    xinput set-prop "${TRACKPOINT}" "${WHEEL} Button" 2
-    xinput set-prop "${TRACKPOINT}" "${WHEEL} Timeout" 200 
+    enabled="${input: -1}"
+    enable_wheel
 fi
