@@ -7,7 +7,3 @@ Add to your `~/.config/i3/config` file (or wherever you store it):
 ```
 bindcode 156 exec --no-startup-id ~/trackpoint
 ```
-
-# TODO
-- Make it work on xn40 and higher;
-- Make a script to bind this one to the ThinkVantage button.
