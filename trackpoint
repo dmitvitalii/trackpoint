@@ -15,13 +15,13 @@
 #
 # Enables/disables trackpoint for IBM/Lenovo Thinkpad laptops before *40
 # (e.g. for x230 works, for x240 doesn't).
-# TODO add *40 models and higher.
 
 readonly TRACKPOINT="TPPS/2 IBM TrackPoint"
 readonly WHEEL="Evdev Wheel Emulation"
 readonly MIDDLE="libinput Scroll Method Enabled"
 
 enable_middle() {
+    local enabled=${1}
     if [ "${enabled}" -eq 1 ]; then
         xinput set-prop "${TRACKPOINT}" "${MIDDLE}" 0, 0, 0
     else
@@ -42,9 +42,7 @@ enable_wheel() {
 input=$(xinput --list-props  "${TRACKPOINT}" | grep -i "${WHEEL} (")
 if [ -z "${input}" ]; then
     input=$(xinput --list-props  "${TRACKPOINT}" | grep -i "${MIDDLE} (")
-    enabled="${input: -1}"
-    enable_middle
+    enable_middle "${input: -1}"
 else
-    enabled="${input: -1}"
-    enable_wheel
+    enable_wheel "${input: -1}"
 fi
