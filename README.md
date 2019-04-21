@@ -9,4 +9,5 @@ bindcode 156 exec --no-startup-id ~/trackpoint
 
 ## Tested on ##
 OS: Fedora, Ubuntu
+
 DEVICE: X220, X230, X1 Carbon, T440
