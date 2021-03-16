@@ -13,8 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Enables/disables trackpoint for IBM/Lenovo Thinkpad laptops before *40
-# (e.g. for x230 works, for x240 doesn't).
+# Enables/disables trackpoint for IBM/Lenovo Thinkpad laptops
 
 readonly TRACKPOINT="TPPS/2 IBM TrackPoint"
 readonly WHEEL="Evdev Wheel Emulation"
